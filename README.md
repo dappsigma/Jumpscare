@@ -1,0 +1,1 @@
+Jamsker buat danis
