@@ -1,201 +1,351 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The 18th Chapter | Danish Nihel Putri Supardi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Birthstone&family=Montserrat:wght@200;400;600&family=Playfair+Display:italic,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Birthstone&family=Montserrat:wght@200;400;600&family=Playfair+Display:italic,wght@0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    
+
     <style>
-        :root {
-            --ocean-blue: #5499c7;
-            --deep-blue: #2c3e50;
-            --soft-bg: #f4f9ff;
+      :root {
+        --ocean-blue: #5499c7;
+        --deep-blue: #2c3e50;
+        --soft-bg: #f8fbff;
+        --glass: rgba(255, 255, 255, 0.7);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family: "Montserrat", sans-serif;
+        perspective: 1000px;
+      }
+
+      /* Decorative Background Orbs */
+      .orb {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(84, 153, 199, 0.15) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        border-radius: 50%;
+        z-index: 0;
+      }
+
+      /* Falling Hearts */
+      .heart {
+        position: fixed;
+        color: rgba(84, 153, 199, 0.5);
+        font-size: 14px;
+        pointer-events: none;
+        z-index: 1;
+        top: -20px;
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(105vh) rotate(360deg);
+          opacity: 0;
         }
+      }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+      /* Card Modernized */
+      .main-card {
+        position: relative;
+        z-index: 10;
+        width: 90%;
+        max-width: 450px;
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 50px;
+        padding: 50px 40px;
+        text-align: center;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: float 6s ease-in-out infinite;
+      }
 
-        body {
-            background: radial-gradient(circle at center, #ffffff 0%, #d6eaf8 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
         }
-
-        /* Falling Hearts */
-        .heart {
-            position: fixed;
-            color: rgba(84, 153, 199, 0.4);
-            font-size: 14px;
-            pointer-events: none;
-            z-index: 1;
-            top: -20px;
+        50% {
+          transform: translateY(-10px);
         }
+      }
 
-        @keyframes fall {
-            to { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-        }
+      .fancy-name {
+        font-family: "Birthstone", cursive;
+        font-size: 5.5rem;
+        color: var(--ocean-blue);
+        line-height: 0.7;
+        margin: 25px 0;
+        display: block;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+      }
 
-        /* Card Initial */
-        .main-card {
-            position: relative;
-            z-index: 10;
-            width: 88%;
-            max-width: 480px;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 40px;
-            padding: 60px 35px;
-            text-align: center;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.05);
-            transition: all 1s ease;
-        }
+      .btn-reveal {
+        background: linear-gradient(135deg, #5499c7 0%, #3498db 100%);
+        border: none;
+        color: white;
+        padding: 18px 45px;
+        border-radius: 100px;
+        cursor: pointer;
+        font-size: 12px;
+        letter-spacing: 3px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px rgba(84, 153, 199, 0.3);
+        text-transform: uppercase;
+      }
 
-        .fancy-name {
-            font-family: 'Birthstone', cursive;
-            font-size: 5rem;
-            color: var(--ocean-blue);
-            line-height: 0.8;
-            margin: 20px 0;
-            display: block;
-        }
+      .btn-reveal:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 25px rgba(84, 153, 199, 0.4);
+      }
 
-        .btn-reveal {
-            background: var(--ocean-blue);
-            border: none;
-            color: white;
-            padding: 18px 50px;
-            border-radius: 100px;
-            cursor: pointer;
-            font-size: 13px;
-            letter-spacing: 4px;
-            font-weight: 600;
-            transition: all 0.4s ease;
-            margin-top: 25px;
-            box-shadow: 0 15px 35px rgba(84, 153, 199, 0.3);
-        }
+      /* Overlay Fullscreen */
+      #overlay {
+        position: fixed;
+        inset: 0;
+        background: #ffffff;
+        z-index: 100;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 1.2s ease-in-out;
+        padding: 20px;
+      }
 
-        /* Overlay */
-        #overlay {
-            position: fixed;
-            inset: 0;
-            background: #ffffff;
-            z-index: 100;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
+      .love-letter-container {
+        width: 100%;
+        max-width: 400px;
+        max-height: 55vh;
+        overflow-y: auto;
+        background: #ffffff;
+        border-radius: 30px;
+        padding: 30px;
+        margin-top: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        border: 1px solid #f0f0f0;
+      }
 
-        /* Container Surat - Fixed Scrolling */
-        .love-letter-container {
-            width: 85%;
-            max-width: 420px;
-            max-height: 60vh;
-            overflow-y: auto;
-            overflow-x: hidden; /* Mencegah scroll ke samping */
-            background: var(--soft-bg);
-            border-radius: 30px;
-            padding: 25px;
-            margin-top: 20px;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.02);
-        }
+      .spotify-wrapper {
+        width: 100%;
+        height: 80px; /* Slimmer look */
+        margin-bottom: 25px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
 
-        /* Wrapper Spotify - Fixed Position */
-        .spotify-wrapper {
-            width: 100%;
-            height: 152px;
-            margin-bottom: 25px;
-            border-radius: 12px;
-            overflow: hidden; /* Memastikan iframe tidak meluap */
-            position: relative;
-        }
+      .love-letter-container p {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: #4a4a4a;
+        margin-bottom: 18px;
+        font-weight: 400;
+      }
 
-        .love-letter-container p {
-            font-size: 0.95rem;
-            line-height: 1.9;
-            color: #555;
-            margin-bottom: 15px;
-        }
-
-        .love-letter-container::-webkit-scrollbar { width: 5px; }
-        .love-letter-container::-webkit-scrollbar-thumb { background: #d6eaf8; border-radius: 10px; }
+      .love-letter-container::-webkit-scrollbar {
+        width: 4px;
+      }
+      .love-letter-container::-webkit-scrollbar-thumb {
+        background: #e1eaf0;
+        border-radius: 10px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="orb" style="top: -100px; left: -100px"></div>
+    <div class="orb" style="bottom: -100px; right: -100px"></div>
 
     <audio id="romanticSong" loop>
-        <source src="https://files.catbox.moe/k6f7u6.mp3" type="audio/mpeg">
+      <source src="https://files.catbox.moe/k6f7u6.mp3" type="audio/mpeg" />
     </audio>
 
     <div class="main-card" id="card">
-        <div class="age-badge" style="letter-spacing: 12px; color: var(--ocean-blue); font-size: 10px; margin-bottom: 25px; text-transform: uppercase;">Sweet Eighteen</div>
-        <h1 style="font-family: 'Playfair Display', serif; color: var(--deep-blue); font-size: 2.2rem;">For The Dearest</h1>
-        <span class="fancy-name">Danish Nihel</span>
-        <h1 style="font-size: 1.5rem; font-family: 'Playfair Display', serif; color: var(--deep-blue); margin-top: -10px;">Putri Supardi</h1>
-        <p style="font-style: italic; color: #95a5a6; margin: 30px 0; font-size: 0.9rem;">"Happy Birthday My Love🌹"</p>
-        <button class="btn-reveal" onclick="launchSurprise()">OPEN YOUR GIFT 💙</button>
+      <div
+        class="age-badge"
+        style="
+          letter-spacing: 10px;
+          color: var(--ocean-blue);
+          font-size: 9px;
+          margin-bottom: 20px;
+          font-weight: 600;
+          text-transform: uppercase;
+          opacity: 0.8;
+        "
+      >
+        The 18th Chapter
+      </div>
+      <h1
+        style="
+          font-family: &quot;Playfair Display&quot;, serif;
+          color: var(--deep-blue);
+          font-size: 2rem;
+          font-weight: 700;
+        "
+      >
+        For The Dearest
+      </h1>
+      <span class="fancy-name">Danish Nihel</span>
+      <h1
+        style="
+          font-size: 1.4rem;
+          font-family: &quot;Playfair Display&quot;, serif;
+          color: var(--deep-blue);
+          margin-top: -10px;
+          font-weight: 700;
+          letter-spacing: 1px;
+        "
+      >
+        Putri Supardi
+      </h1>
+      <p
+        style="
+          font-style: italic;
+          color: #7f8c8d;
+          margin: 35px 0;
+          font-size: 0.85rem;
+          letter-spacing: 1px;
+        "
+      >
+        "Happy Birthday My Love🌹"
+      </p>
+      <button class="btn-reveal" onclick="launchSurprise()">
+        OPEN YOUR GIFT 💙
+      </button>
     </div>
 
     <div id="overlay">
-        <h2 style="font-family: 'Birthstone', cursive; font-size: 5.5rem; color: var(--ocean-blue); margin-bottom: -5px;">Happy Birthday!</h2>
-        <p style="letter-spacing: 5px; color: #bdc3c7; font-size: 10px; margin-bottom: 20px;">DANISH NIHEL PUTRI SUPARDI</p>
-        
-        <div class="love-letter-container">
-            <div class="spotify-wrapper">
-                <iframe src="https://open.spotify.com/embed/track/3W7KHojYGgYaoX9ogKO9hU?utm_source=oembed" style="width: 100%; height: 100%; border: 0;" allowfullscreen allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-            </div>
+      <h2
+        style="
+          font-family: &quot;Birthstone&quot;, cursive;
+          font-size: 5rem;
+          color: var(--ocean-blue);
+          margin-bottom: 0px;
+        "
+      >
+        Happy Birthday!
+      </h2>
+      <p
+        style="
+          letter-spacing: 4px;
+          color: #bdc3c7;
+          font-size: 9px;
+          margin-bottom: 25px;
+          font-weight: 600;
+        "
+      >
+        DANISH NIHEL PUTRI SUPARDI
+      </p>
 
-<p>Hi Danish,</p>
-            <p>Selamat ulang tahun yang ke-18. Hari ini bukan cuma tentang bertambahnya usia, tapi tentang betapa bersyukurnya aku karena ada sosok seperti kamu di dunia ini.</p>
-            <p>Sama seperti lagu ini, aku harap kamu selalu merasa aman dan tenang. Teruslah tumbuh menjadi wanita yang hebat, tetaplah bersinar dengan caramu sendiri, dan jangan pernah biarkan apapun memadamkan senyummu.</p>
-            <p>Kejutan kecil ini hanya sebagian kecil dari banyaknya hal baik yang ingin aku berikan untukmu. Semoga kamu suka.</p>
-            <p>With all my heart, <br> <strong>[Daffa]</strong></p>
+      <div class="love-letter-container">
+        <div class="spotify-wrapper">
+          <iframe
+            src="https://open.spotify.com/embed/track/3W7KHojYGgYaoX9ogKO9hU?utm_source=oembed"
+            style="width: 100%; height: 100%; border: 0"
+            allowfullscreen
+            allow="
+              clipboard-write;
+              encrypted-media;
+              fullscreen;
+              picture-in-picture;
+            "
+          ></iframe>
         </div>
 
-        <button class="btn-reveal" style="margin-top: 35px;" onclick="location.href='https://danish-gallery.vercel.app/'">
-            LIHAT GALERI FOTO 📸
-        </button>
+        <p>Hi Danish,</p>
+        <p>
+          Selamat ulang tahun yang ke-18. Hari ini bukan cuma tentang
+          bertambahnya usia, tapi tentang betapa bersyukurnya aku karena ada
+          sosok seperti kamu di dunia ini.
+        </p>
+        <p>
+          Sama seperti lagu ini, aku harap kamu selalu merasa aman dan tenang.
+          Teruslah tumbuh menjadi wanita yang hebat, tetaplah bersinar dengan
+          caramu sendiri, dan jangan pernah biarkan apapun memadamkan senyummu.
+        </p>
+        <p>
+          Kejutan kecil ini hanya sebagian kecil dari banyaknya hal baik yang
+          ingin aku berikan untukmu. Semoga kamu suka.
+        </p>
+        <p style="margin-top: 30px">
+          With all my heart, <br />
+          <strong style="color: var(--ocean-blue); font-size: 1.1rem"
+            >[Daffa]</strong
+          >
+        </p>
+      </div>
+
+      <button
+        class="btn-reveal"
+        style="margin-top: 30px; padding: 15px 35px"
+        onclick="location.href = 'https://danish-gallery.vercel.app/'"
+      >
+        LIHAT GALERI FOTO 📸
+      </button>
     </div>
 
     <script>
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerText = '💙';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animation = `fall ${Math.random() * 2 + 4}s linear forwards`;
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 6000);
-        }
-        setInterval(createHeart, 400);
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerText = "💙";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animation = `fall ${Math.random() * 2 + 4}s linear forwards`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+      setInterval(createHeart, 500);
 
-        function launchSurprise() {
-            const audio = document.getElementById('romanticSong');
-            audio.play().catch(e => console.log("Audio play deferred"));
+      function launchSurprise() {
+        const audio = document.getElementById("romanticSong");
+        audio.play().catch((e) => console.log("Audio play deferred"));
 
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#5499c7', '#d6eaf8', '#ffffff']
-            });
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ["#5499c7", "#aed6f1", "#ffffff"],
+        });
 
-            setTimeout(() => {
-                document.getElementById('card').style.opacity = '0';
-                const overlay = document.getElementById('overlay');
-                overlay.style.display = 'flex';
-                setTimeout(() => overlay.style.opacity = '1', 100);
-            }, 800);
-        }
+        setTimeout(() => {
+          document.getElementById("card").style.transform =
+            "scale(0.9) translateY(-20px)";
+          document.getElementById("card").style.opacity = "0";
+
+          setTimeout(() => {
+            const overlay = document.getElementById("overlay");
+            overlay.style.display = "flex";
+            setTimeout(() => (overlay.style.opacity = "1"), 100);
+          }, 500);
+        }, 800);
+      }
     </script>
-</body>
+  </body>
 </html>
